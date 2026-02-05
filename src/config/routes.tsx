@@ -9,6 +9,7 @@ import { SystemSetupPage } from "@features/auth/pages/system-setup";
 import { UserListPage } from "@features/user/pages/list";
 
 import { LanguageListPage } from "@features/language/pages/list";
+import { UserUpdateFormPage } from "@features/user/pages/update-form";
 
 export function RouteProvider() {
     return (
@@ -23,6 +24,7 @@ export function RouteProvider() {
 
                 <Route path="app" element={<AppLayout />}>
                     <Route path="user/list" element={<UserListPage />} />
+                    <Route path="user/form/:id" element={<UserUpdateFormPage />} />
 
                     <Route path="language/list" element={<LanguageListPage />} />
                 </Route>

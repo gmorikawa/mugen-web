@@ -13,7 +13,10 @@ export function Title({
     return (
         <Typography.Title
             level={level}
-            style={style}
+            style={{
+                margin: 0,
+                ...style,
+            }}
         >
             {children}
         </Typography.Title>

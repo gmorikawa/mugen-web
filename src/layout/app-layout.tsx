@@ -1,8 +1,11 @@
-import { Layout, theme } from "antd";
-import { Viewport } from "@components/container/viewport";
-import { ApplicationMenu } from "./menu";
-import { Container } from "@components/container/container";
 import { Outlet } from "react-router-dom";
+import { Layout, theme } from "antd";
+
+import { Viewport } from "@components/container/viewport";
+import { Container } from "@components/container/container";
+import { Title } from "@components/typography/title";
+
+import { ApplicationMenu } from "./menu";
 
 const { Header, Content } = Layout;
 
@@ -24,8 +27,19 @@ export function AppLayout() {
                         height: "100%",
                     }}
                 >
-                    <Header style={{ padding: 0, background: colorBgContainer }} />
-                    <Content style={{ margin: "24px 24px" }}>
+                    <Header
+                        style={{
+                            paddingLeft: "24px",
+                            background: colorBgContainer,
+                            display: "flex",
+                            alignItems: "center"
+                        }}
+                    >
+                        <Title level={3}>
+                            App Title
+                        </Title>
+                    </Header>
+                    <Content style={{ margin: "24px" }}>
                         <Container
                             style={{
                                 padding: 24,

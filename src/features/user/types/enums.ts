@@ -1,2 +1,2 @@
-export type UserRole = "ADMIN" | "LIBRARIAN" | "READER";
+export type UserRole = "ADMIN" | "MANAGER" | "MEMBER";
 export type UserStatus = "ACTIVE" | "BLOCKED";
