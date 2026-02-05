@@ -1,18 +1,26 @@
 import { Form, Input } from "antd";
 
+import { useNavigator } from "@shared/router/hooks/navigator";
+
 import { Card } from "@components/container/card";
 import { SubmitButton } from "@components/button/submit-button";
 import { Title } from "@components/typography/title";
 
 import type { Credentials } from "@features/auth/types/credentials";
-import { Container } from "@components/container/container";
-import { login } from "../utils/api";
+import type { Session } from "@features/auth/types/session";
+import { useSession } from "@features/auth/hooks/session";
+import { login } from "@features/auth/utils/api";
 
 export function LoginPage() {
+    const { update } = useSession();
+    const navigate = useNavigator();
+
     const handleFinish = (values: Credentials) => {
         login(values.username, values.password)
-            .then((session) => {
-                console.log("Login successful:", session);
+            .then((session: Session) => {
+                update(session.token, session.loggedUser);
+
+                navigate.to("/app/user/list");
             })
             .catch((error) => {
                 console.error("Login failed:", error);

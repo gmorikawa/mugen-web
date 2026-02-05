@@ -11,6 +11,7 @@ export async function systemSetup(
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({ email, username, password }),
     });
@@ -28,6 +29,7 @@ export async function login(
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({ username, password }),
     });
