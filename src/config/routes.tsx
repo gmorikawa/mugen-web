@@ -5,6 +5,7 @@ import { AppLayout } from "@layout/app-layout";
 
 import { LoginPage } from "@features/auth/pages/login";
 import { SystemSetupPage } from "@features/auth/pages/system-setup";
+import { EmailConfirmationPage } from "@features/auth/pages/email-confirmation";
 
 import { UserListPage } from "@features/user/pages/list";
 
@@ -20,6 +21,7 @@ export function RouteProvider() {
                 <Route element={<AuthLayout />}>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/system-setup" element={<SystemSetupPage />} />
+                    <Route path="/email-confirmation" element={<EmailConfirmationPage />} />
                 </Route>
 
                 <Route path="app" element={<AppLayout />}>

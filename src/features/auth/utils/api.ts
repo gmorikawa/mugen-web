@@ -1,6 +1,7 @@
 import { Environment } from "@config/environment";
 
 import type { Session } from "@features/auth/types/session";
+import type { Token } from "@features/auth/types/token";
 
 export async function systemSetup(
     email: string,
@@ -55,4 +56,25 @@ export async function login(
         token: session["token"],
         loggedUser: session["loggedUser"],
     };
+}
+
+export async function confirmEmail(
+    token: Token
+): Promise<boolean> {
+    const response = await fetch(Environment.API_URL.concat("/auth/email-confirmation"), {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({ token }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Email confirmation failed");
+    }
+
+    const result = await response.json();
+
+    return result["success"];
 }

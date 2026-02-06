@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 
+import { useNavigator } from "@shared/router/hooks/navigator";
+
+import { Button } from "@components/button/button";
+import { Container } from "@components/container/container";
+
 import type { User } from "@features/user/types/user";
 import { useSession } from "@features/auth/hooks/session";
 import { getUsers } from "@features/user/utils/api";
-import { UserCard } from "../components/user-card";
-import { Button } from "@components/button/button";
-import { Container } from "@components/container/container";
-import { useNavigator } from "@shared/router/hooks/navigator";
+import { UserCard } from "@features/user/components/user-card";
 
 export function UserListPage() {
     const [users, setUsers] = useState<User[]>([]);
@@ -27,7 +29,6 @@ export function UserListPage() {
                 setUsers(fetchedUsers);
             })
             .catch((error) => {
-                // Handle error
                 console.error(error);
             });
     }, []);
