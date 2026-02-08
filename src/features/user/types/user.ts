@@ -8,8 +8,6 @@ export interface User {
     email: string;
     role: UserRole;
     profile?: UserProfile;
-    // status: UserStatus;
-    // fullname: string;
 }
 
 export interface NewUser {
@@ -17,6 +15,4 @@ export interface NewUser {
     password: string;
     email: string;
     role: UserRole;
-    // status: UserStatus;
-    // fullname: string;
 }

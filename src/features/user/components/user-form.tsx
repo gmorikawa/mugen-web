@@ -1,22 +1,31 @@
-import { Container } from "@components/container/container";
-import { Title } from "@components/typography/title";
 import { Form, Input } from "antd";
-import type { UserRole } from "../types/enums";
+
+import { Container } from "@components/container/container";
 import { RadioInput } from "@components/form/radio-input";
 import { SubmitButton } from "@components/button/submit-button";
-import type { User } from "../types/user";
+import { Title } from "@components/typography/title";
+
+import type { UserRole } from "@features/user/types/enums";
+import type { User } from "@features/user//types/user";
+import { AvatarUploadInput } from "./avatar-upload-input";
 
 export interface UserFormProps<Entity> {
     user: User;
+    avatarUrl?: string;
 
+    onChangeAvatar?: (file: File | null) => void;
     onSubmit?: (data: Entity) => void;
 }
 
 export function UserForm<Entity>({
     user,
+    avatarUrl,
 
+    onChangeAvatar,
     onSubmit
 }: UserFormProps<Entity>) {
+    const [form] = Form.useForm();
+
     const handleFinish = (values: Entity) => {
         if (onSubmit) {
             onSubmit(values);
@@ -26,6 +35,7 @@ export function UserForm<Entity>({
     return (
         <Container>
             <Form
+                form={form}
                 name="basic"
                 layout="vertical"
                 labelCol={{ span: 24 }}
@@ -40,6 +50,15 @@ export function UserForm<Entity>({
                     <Title level={5}>
                         User Profile
                     </Title>
+                </Form.Item>
+
+                <Form.Item
+                    label="Avatar"
+                >
+                    <AvatarUploadInput
+                        previewUrl={avatarUrl}
+                        onChange={onChangeAvatar}
+                    />
                 </Form.Item>
 
                 <Form.Item<string>

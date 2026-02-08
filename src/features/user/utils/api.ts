@@ -1,8 +1,10 @@
 import { Environment } from "@config/environment";
 
-import type { Session } from "@features/auth/types/session";
-import type { User } from "@features/user/types/user";
 import type { ID } from "@shared/entity/types/id";
+
+import type { Session } from "@features/auth/types/session";
+import type { BinaryFile } from "@features/file/types/binary-file";
+import type { User } from "@features/user/types/user";
 
 export async function getUsers(
     session: Session
@@ -67,4 +69,56 @@ export async function updateUser(
     }
 
     return response.json();
+}
+
+export async function downloadUserAvatar(
+    session: Session,
+    id: ID,
+    abort?: AbortSignal
+): Promise<Blob> {
+
+    const response = await fetch(
+        Environment.API_URL.concat(`/users/${id}/profile/avatar`),
+        {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${session.token}`,
+            },
+            signal: abort,
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Download user avatar request failed");
+    }
+
+    return response.blob();
+}
+
+export async function uploadUserAvatar(
+    session: Session,
+    id: ID,
+    file: BinaryFile
+): Promise<boolean> {
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const response = await fetch(
+        Environment.API_URL.concat(`/users/${id}/profile/avatar`),
+        {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${session.token}`,
+                "Accept": "application/json"
+            },
+            body: formData
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Upload user avatar request failed");
+    }
+
+    const { success } = await response.json();
+    return success;
 }
