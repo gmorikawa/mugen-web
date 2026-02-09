@@ -8,32 +8,38 @@ import { downloadUserAvatar } from "@features/user/utils/api";
 import { NoSessionError } from "@features/auth/errors/no-session-error";
 
 export interface ProfileAvatarController {
-    link: string;
+    link: string | null;
 
-    updateWithBinary(file: BinaryFile): void;
+    updateWithBinary(file: BinaryFile | null): void;
     reset(): void;
 }
 
 export function useProfileAvatar(userId: ID): ProfileAvatarController {
-    const [link, setLink] = useState<string>("");
+    const [link, setLink] = useState<string | null>(null);
     const { session } = useSession();
 
     if (!session) {
         throw new NoSessionError();
     }
 
-    const updateWithBinary = (file: BinaryFile) => {
+    const updateWithBinary = (file: BinaryFile | null) => {
+        if (!file) {
+            return;
+        }
+
         const url = URL.createObjectURL(file);
-        setLink((previousLink: string) => {
-            URL.revokeObjectURL(previousLink);
+        setLink((previousLink: string | null) => {
+            if (previousLink)
+                URL.revokeObjectURL(previousLink);
             return url;
         });
     };
 
     const reset = () => {
-        setLink((previousLink: string) => {
-            URL.revokeObjectURL(previousLink);
-            return "";
+        setLink((previousLink: string | null) => {
+            if (previousLink)
+                URL.revokeObjectURL(previousLink);
+            return null;
         });
     };
 

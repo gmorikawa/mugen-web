@@ -1,9 +1,11 @@
+import { Avatar } from "@components/data-display/avatar";
 import { Card } from "@components/container/card";
 import { Container } from "@components/container/container";
-import { Avatar } from "@components/data-display/avatar";
 import { Paragraph } from "@components/typography/paragraph";
 import { Title } from "@components/typography/title";
+
 import type { User } from "@features/user/types/user";
+import { useProfileAvatar } from "@features/user/hooks/profile-avatar";
 
 export interface UserCardProps {
     user: User;
@@ -15,6 +17,8 @@ export function UserCard({
     user,
     actionSlot
 }: UserCardProps) {
+    const profileAvatar = useProfileAvatar(user?.id);
+
     return (
         <Card>
             <Container
@@ -33,7 +37,10 @@ export function UserCard({
                         gap: "16px",
                     }}
                 >
-                    <Avatar size="large">
+                    <Avatar
+                        size={64}
+                        src={profileAvatar?.link}
+                    >
                         {user.username.charAt(0).toUpperCase()}
                     </Avatar>
 

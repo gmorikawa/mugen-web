@@ -11,7 +11,7 @@ import { AvatarUploadInput } from "./avatar-upload-input";
 
 export interface UserFormProps<Entity> {
     user: User;
-    avatarUrl?: string;
+    avatarUrl: string | null;
 
     onChangeAvatar?: (file: File | null) => void;
     onSubmit?: (data: Entity) => void;
@@ -56,7 +56,7 @@ export function UserForm<Entity>({
                     label="Avatar"
                 >
                     <AvatarUploadInput
-                        previewUrl={avatarUrl}
+                        previewUrl={avatarUrl || undefined}
                         onChange={onChangeAvatar}
                     />
                 </Form.Item>
