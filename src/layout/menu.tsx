@@ -29,6 +29,8 @@ export function ApplicationMenu() {
                 items={[
                     { key: "1", icon: null, label: "Users", onClick: () => onClick("/app/user/list") },
                     { key: "2", icon: null, label: "Languages", onClick: () => onClick("/app/language/list") },
+                    { key: "3", icon: null, label: "Countries", onClick: () => onClick("/app/country/list") },
+                    { key: "4", icon: null, label: "Categories", onClick: () => onClick("/app/category/list") },
                 ]}
             />
         </Sider>

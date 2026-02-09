@@ -14,6 +14,12 @@ import { UserUpdateFormPage } from "@features/user/pages/update-form";
 import { LanguageListPage } from "@features/language/pages/list";
 import { LanguageCreateFormPage } from "@features/language/pages/create-form";
 import { LanguageUpdateFormPage } from "@features/language/pages/update-form";
+import { CountryListPage } from "@features/country/pages/list";
+import { CountryCreateFormPage } from "@features/country/pages/create-form";
+import { CountryUpdateFormPage } from "@features/country/pages/update-form";
+import { CategoryListPage } from "@features/category/pages/list";
+import { CategoryCreateFormPage } from "@features/category/pages/create-form";
+import { CategoryUpdateFormPage } from "@features/category/pages/update-form";
 
 export function RouteProvider() {
     return (
@@ -35,6 +41,14 @@ export function RouteProvider() {
                     <Route path="language/list" element={<LanguageListPage />} />
                     <Route path="language/form" element={<LanguageCreateFormPage />} />
                     <Route path="language/form/:id" element={<LanguageUpdateFormPage />} />
+
+                    <Route path="country/list" element={<CountryListPage />} />
+                    <Route path="country/form" element={<CountryCreateFormPage />} />
+                    <Route path="country/form/:id" element={<CountryUpdateFormPage />} />
+
+                    <Route path="category/list" element={<CategoryListPage />} />
+                    <Route path="category/form" element={<CategoryCreateFormPage />} />
+                    <Route path="category/form/:id" element={<CategoryUpdateFormPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
