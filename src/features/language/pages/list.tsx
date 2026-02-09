@@ -1,39 +1,58 @@
-import { useEffect, useState } from "react";
-
 import { useApplicationHeader } from "@shared/application/hooks/application-header";
 
 import type { Language } from "@features/language/types/language";
-import { useSession } from "@features/auth/hooks/session";
-import { getLanguages } from "@features/language/utils/api";
+import { useNavigator } from "@shared/router/hooks/navigator";
+import { LanguageCard } from "../components/language-card";
+import { Container } from "@components/container/container";
+import { Button } from "@components/button/button";
+import { useLanguageService } from "../hooks/language-service";
+import { useLanguageSearch } from "../hooks/language-search";
 
 export function LanguageListPage() {
     useApplicationHeader(
         "Language List",
         [
-            
+            {
+                label: "New",
+                action: () => {
+                    navigate.to("/app/language/form");
+                }
+            }
         ]
     );
 
-    const [languages, setLanguages] = useState<Language[]>([]);
-    const { session } = useSession();
+    const service = useLanguageService();
+    const languages = useLanguageSearch();
+    const navigate = useNavigator();
 
-    if (!session) {
-        throw new Error("No session found");
-    }
+    const handleUpdate = (language: Language) => {
+        navigate.to(`/app/language/form/${language.id}`);
+    };
 
-    useEffect(() => {
-        getLanguages(session)
-            .then((fetchedLanguages: Language[]) => {
-                setLanguages(fetchedLanguages);
+    const handleDelete = (language: Language) => {
+        service.delete(language)
+            .then(() => {
+                languages.refresh();
             })
-            .catch((error) => {
-                // Handle error
-                console.error(error);
+            .catch((_: Error) => {
             });
-    }, []);
-    return languages.map((language) => (
-        <div key={language.id}>
-            {language.id} - {language.name} - {language.isoCode}
-        </div>
+    };
+
+    return languages.data.map((language: Language) => (
+        <LanguageCard
+            key={language.id}
+            language={language}
+            actionSlot={
+                <Container
+                    style={{
+                        display: "flex",
+                        gap: "8px",
+                    }}
+                >
+                    <Button onClick={() => handleUpdate(language)} color="primary" variant="outlined">Edit</Button>
+                    <Button onClick={() => handleDelete(language)} color="danger" variant="outlined">Delete</Button>
+                </Container>
+            }
+        />
     ));
 }

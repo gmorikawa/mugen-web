@@ -1,3 +1,4 @@
+import { AlertProvider } from "@components/feedback/alert/provider";
 import { RouteProvider } from "@config/routes";
 
 import { UserSessionProvider } from "@features/auth/components/user-session-provider";
@@ -5,8 +6,10 @@ import { UserSessionProvider } from "@features/auth/components/user-session-prov
 export function App() {
 
     return (
-        <UserSessionProvider>
-            <RouteProvider />
-        </UserSessionProvider>
+        <AlertProvider>
+            <UserSessionProvider>
+                <RouteProvider />
+            </UserSessionProvider>
+        </AlertProvider>
     );
 }

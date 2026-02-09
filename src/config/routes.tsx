@@ -8,10 +8,12 @@ import { SystemSetupPage } from "@features/auth/pages/system-setup";
 import { EmailConfirmationPage } from "@features/auth/pages/email-confirmation";
 
 import { UserListPage } from "@features/user/pages/list";
-
-import { LanguageListPage } from "@features/language/pages/list";
 import { UserCreateFormPage } from "@features/user/pages/create-form";
 import { UserUpdateFormPage } from "@features/user/pages/update-form";
+
+import { LanguageListPage } from "@features/language/pages/list";
+import { LanguageCreateFormPage } from "@features/language/pages/create-form";
+import { LanguageUpdateFormPage } from "@features/language/pages/update-form";
 
 export function RouteProvider() {
     return (
@@ -31,6 +33,8 @@ export function RouteProvider() {
                     <Route path="user/form/:id" element={<UserUpdateFormPage />} />
 
                     <Route path="language/list" element={<LanguageListPage />} />
+                    <Route path="language/form" element={<LanguageCreateFormPage />} />
+                    <Route path="language/form/:id" element={<LanguageUpdateFormPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
