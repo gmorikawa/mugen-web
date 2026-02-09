@@ -31,6 +31,9 @@ export function ApplicationMenu() {
                     { key: "2", icon: null, label: "Languages", onClick: () => onClick("/app/language/list") },
                     { key: "3", icon: null, label: "Countries", onClick: () => onClick("/app/country/list") },
                     { key: "4", icon: null, label: "Categories", onClick: () => onClick("/app/category/list") },
+                    { key: "5", icon: null, label: "Color Encodings", onClick: () => onClick("/app/color-encoding/list") },
+                    { key: "6", icon: null, label: "Companies", onClick: () => onClick("/app/company/list") },
+                    { key: "7", icon: null, label: "Platforms", onClick: () => onClick("/app/platform/list") },
                 ]}
             />
         </Sider>

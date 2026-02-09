@@ -20,6 +20,15 @@ import { CountryUpdateFormPage } from "@features/country/pages/update-form";
 import { CategoryListPage } from "@features/category/pages/list";
 import { CategoryCreateFormPage } from "@features/category/pages/create-form";
 import { CategoryUpdateFormPage } from "@features/category/pages/update-form";
+import { ColorEncodingListPage } from "@features/color-encoding/pages/list";
+import { ColorEncodingCreateFormPage } from "@features/color-encoding/pages/create-form";
+import { ColorEncodingUpdateFormPage } from "@features/color-encoding/pages/update-form";
+import { CompanyListPage } from "@features/company/pages/list";
+import { CompanyCreateFormPage } from "@features/company/pages/create-form";
+import { CompanyUpdateFormPage } from "@features/company/pages/update-form";
+import { PlatformListPage } from "@features/platform/pages/list";
+import { PlatformCreateFormPage } from "@features/platform/pages/create-form";
+import { PlatformUpdateFormPage } from "@features/platform/pages/update-form";
 
 export function RouteProvider() {
     return (
@@ -49,6 +58,18 @@ export function RouteProvider() {
                     <Route path="category/list" element={<CategoryListPage />} />
                     <Route path="category/form" element={<CategoryCreateFormPage />} />
                     <Route path="category/form/:id" element={<CategoryUpdateFormPage />} />
+
+                    <Route path="color-encoding/list" element={<ColorEncodingListPage />} />
+                    <Route path="color-encoding/form" element={<ColorEncodingCreateFormPage />} />
+                    <Route path="color-encoding/form/:id" element={<ColorEncodingUpdateFormPage />} />
+
+                    <Route path="company/list" element={<CompanyListPage />} />
+                    <Route path="company/form" element={<CompanyCreateFormPage />} />
+                    <Route path="company/form/:id" element={<CompanyUpdateFormPage />} />
+
+                    <Route path="platform/list" element={<PlatformListPage />} />
+                    <Route path="platform/form" element={<PlatformCreateFormPage />} />
+                    <Route path="platform/form/:id" element={<PlatformUpdateFormPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
