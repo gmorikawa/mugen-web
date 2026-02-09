@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { useApplicationHeader } from "@shared/application/hooks/application-header";
 import { useNavigator } from "@shared/router/hooks/navigator";
 
 import { Button } from "@components/button/button";
@@ -11,6 +12,13 @@ import { getUsers } from "@features/user/utils/api";
 import { UserCard } from "@features/user/components/user-card";
 
 export function UserListPage() {
+    useApplicationHeader(
+        "User List",
+        [
+            { label: "New", action: () => { navigate.to("/app/user/form"); } },
+        ]
+    );
+
     const [users, setUsers] = useState<User[]>([]);
     const { session } = useSession();
     const navigate = useNavigator();

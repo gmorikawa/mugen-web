@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 
 import type { ID } from "@shared/entity/types/id";
+import { useApplicationHeader } from "@shared/application/hooks/application-header";
+import { useNavigator } from "@shared/router/hooks/navigator";
 import { useParams } from "@shared/router/hooks/params";
 
 import type { User } from "@features/user/types/user";
 import type { UpdateUserDTO } from "@features/user/types/dto";
 import type { BinaryFile } from "@features/file/types/binary-file";
 import { useSession } from "@features/auth/hooks/session";
-import { useNavigator } from "@shared/router/hooks/navigator";
 import { useProfileAvatar } from "@features/user/hooks/profile-avatar";
 import { getUserById, updateUser, uploadUserAvatar } from "@features/user/utils/api";
 import { UserForm } from "@features/user/components/user-form";
@@ -17,6 +18,18 @@ type ParamsWithId = {
 };
 
 export function UserUpdateFormPage() {
+    useApplicationHeader(
+        "Update User",
+        [
+            {
+                label: "Back",
+                action: () => {
+                    navigate.to("/app/user/list");
+                }
+            },
+        ]
+    );
+
     const { id } = useParams<ParamsWithId>();
     const { session } = useSession();
     const [user, setUser] = useState<User | null>(null);
@@ -49,6 +62,10 @@ export function UserUpdateFormPage() {
             });
     };
 
+    const handleCancel = () => {
+        navigate.to("/app/user/list");
+    };
+
     const handleChangeAvatar = (file: BinaryFile | null) => {
         if (file) {
             profileAvatar.updateWithBinary(file);
@@ -74,6 +91,7 @@ export function UserUpdateFormPage() {
             avatarUrl={profileAvatar?.link}
             onChangeAvatar={handleChangeAvatar}
             onSubmit={handleSubmit}
+            onCancel={handleCancel}
         />
     );
 }

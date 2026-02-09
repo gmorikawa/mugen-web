@@ -1,5 +1,7 @@
 import { Form, Input } from "antd";
 
+import { CancelButton } from "@shared/form/components/cancel-button";
+
 import { Container } from "@components/container/container";
 import { RadioInput } from "@components/form/radio-input";
 import { SubmitButton } from "@components/button/submit-button";
@@ -15,6 +17,7 @@ export interface UserFormProps<Entity> {
 
     onChangeAvatar?: (file: File | null) => void;
     onSubmit?: (data: Entity) => void;
+    onCancel?: () => void;
 }
 
 export function UserForm<Entity>({
@@ -22,14 +25,17 @@ export function UserForm<Entity>({
     avatarUrl,
 
     onChangeAvatar,
-    onSubmit
+    onSubmit,
+    onCancel
 }: UserFormProps<Entity>) {
     const [form] = Form.useForm();
 
-    const handleFinish = (values: Entity) => {
-        if (onSubmit) {
-            onSubmit(values);
-        }
+    const handleSubmit = (values: Entity) => {
+        (onSubmit) && onSubmit(values);
+    };
+
+    const handleCancel = () => {
+        (onCancel) && onCancel();
     };
 
     return (
@@ -43,7 +49,7 @@ export function UserForm<Entity>({
                 initialValues={{
                     ...user
                 }}
-                onFinish={handleFinish}
+                onFinish={handleSubmit}
                 autoComplete="off"
             >
                 <Form.Item>
@@ -115,12 +121,23 @@ export function UserForm<Entity>({
                     <Input />
                 </Form.Item>
 
-                <Form.Item
-                    style={{ textAlign: "center" }}
-                >
-                    <SubmitButton>
-                        Save
-                    </SubmitButton>
+                <Form.Item>
+                    <Container
+                        style={{
+                            textAlign: "center",
+                            display: "flex",
+                            gap: "8px",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <SubmitButton>
+                            Save
+                        </SubmitButton>
+
+                        <CancelButton
+                            onClick={handleCancel}
+                        />
+                    </Container>
                 </Form.Item>
 
             </Form>

@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 
+import { useApplicationHeader } from "@shared/application/hooks/application-header";
+
 import type { Language } from "@features/language/types/language";
 import { useSession } from "@features/auth/hooks/session";
 import { getLanguages } from "@features/language/utils/api";
 
 export function LanguageListPage() {
+    useApplicationHeader(
+        "Language List",
+        [
+            
+        ]
+    );
+
     const [languages, setLanguages] = useState<Language[]>([]);
     const { session } = useSession();
 
