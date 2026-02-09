@@ -8,29 +8,18 @@ import { SubmitButton } from "@components/button/submit-button";
 import { Title } from "@components/typography/title";
 
 import type { UserRole } from "@features/user/types/enums";
-import type { User } from "@features/user//types/user";
-import { AvatarUploadInput } from "./avatar-upload-input";
+import type { CreateUserData } from "../types/create-user-data";
 
-export interface UserFormProps<Entity> {
-    user: User;
-    avatarUrl: string | null;
-
-    onChangeAvatar?: (file: File | null) => void;
-    onSubmit?: (data: Entity) => void;
+export interface UserCreateFormProps {
+    onSubmit?: (data: CreateUserData) => void;
     onCancel?: () => void;
 }
 
-export function UserForm<Entity>({
-    user,
-    avatarUrl,
-
-    onChangeAvatar,
+export function UserCreateForm({
     onSubmit,
     onCancel
-}: UserFormProps<Entity>) {
-    const [form] = Form.useForm();
-
-    const handleSubmit = (values: Entity) => {
+}: UserCreateFormProps) {
+    const handleSubmit = (values: CreateUserData) => {
         (onSubmit) && onSubmit(values);
     };
 
@@ -40,47 +29,15 @@ export function UserForm<Entity>({
 
     return (
         <Container>
-            <Form
-                form={form}
+            <Form<CreateUserData>
                 name="basic"
                 layout="vertical"
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
-                initialValues={{
-                    ...user
-                }}
+                initialValues={{ }}
                 onFinish={handleSubmit}
                 autoComplete="off"
             >
-                <Form.Item>
-                    <Title level={5}>
-                        User Profile
-                    </Title>
-                </Form.Item>
-
-                <Form.Item
-                    label="Avatar"
-                >
-                    <AvatarUploadInput
-                        previewUrl={avatarUrl || undefined}
-                        onChange={onChangeAvatar}
-                    />
-                </Form.Item>
-
-                <Form.Item<string>
-                    label="Full Name"
-                    name={["profile", "fullname"]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item<string>
-                    label="Biography"
-                    name={["profile", "biography"]}
-                >
-                    <Input.TextArea />
-                </Form.Item>
-
                 <Form.Item>
                     <Title level={5}>
                         User Credentials
@@ -119,6 +76,36 @@ export function UserForm<Entity>({
                     ]}
                 >
                     <Input />
+                </Form.Item>
+
+                <Form.Item<string>
+                    label="Password"
+                    name="password"
+                    rules={[
+                        { required: true, message: "Please input your password!" },
+                        { min: 6, message: "Password must be at least 6 characters long." }
+                    ]}
+                >
+                    <Input.Password />
+                </Form.Item>
+
+                <Form.Item<string>
+                    label="Confirm Password"
+                    name="passwordConfirmation"
+                    rules={[
+                        { required: true, message: "Please confirm your password!" },
+                        { min: 6, message: "Password must be at least 6 characters long." },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                            },
+                        }),
+                    ]}
+                >
+                    <Input.Password />
                 </Form.Item>
 
                 <Form.Item>

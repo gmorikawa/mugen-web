@@ -5,6 +5,7 @@ import type { ID } from "@shared/entity/types/id";
 import type { Session } from "@features/auth/types/session";
 import type { BinaryFile } from "@features/file/types/binary-file";
 import type { User } from "@features/user/types/user";
+import type { CreateUserDTO, UpdateUserDTO } from "../types/dto";
 
 export async function getUsers(
     session: Session
@@ -45,11 +46,34 @@ export async function getUserById(
     return response.json();
 }
 
+export async function createUser(
+    session: Session,
+    user: CreateUserDTO
+): Promise<User> {
+    const response = await fetch(
+        Environment.API_URL.concat("/users"),
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${session.token}`,
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(user)
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Create user request failed");
+    }
+
+    return response.json();
+}
 
 export async function updateUser(
     session: Session,
     id: ID,
-    user: User
+    user: UpdateUserDTO
 ): Promise<User> {
     const response = await fetch(
         Environment.API_URL.concat(`/users/${id}`),

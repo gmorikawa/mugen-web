@@ -6,12 +6,13 @@ import { useNavigator } from "@shared/router/hooks/navigator";
 import { useParams } from "@shared/router/hooks/params";
 
 import type { User } from "@features/user/types/user";
+import type { UpdateUserData } from "@features/user/types/update-user-data";
 import type { UpdateUserDTO } from "@features/user/types/dto";
 import type { BinaryFile } from "@features/file/types/binary-file";
 import { useSession } from "@features/auth/hooks/session";
 import { useProfileAvatar } from "@features/user/hooks/profile-avatar";
 import { getUserById, updateUser, uploadUserAvatar } from "@features/user/utils/api";
-import { UserForm } from "@features/user/components/user-form";
+import { UserUpdateForm } from "@features/user/components/user-update-form";
 
 type ParamsWithId = {
     id: ID;
@@ -39,8 +40,8 @@ export function UserUpdateFormPage() {
 
     const profileAvatar = useProfileAvatar(id);
 
-    const handleSubmit = (data: UpdateUserDTO) => {
-        const editedUser: User = {
+    const handleSubmit = (data: UpdateUserData) => {
+        const editedUser: UpdateUserDTO = {
             id: id,
             email: data.email,
             username: data.username,
@@ -86,7 +87,7 @@ export function UserUpdateFormPage() {
             });
     }, []);
     return user && (
-        <UserForm<UpdateUserDTO>
+        <UserUpdateForm
             user={user}
             avatarUrl={profileAvatar?.link}
             onChangeAvatar={handleChangeAvatar}

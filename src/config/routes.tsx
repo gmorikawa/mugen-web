@@ -10,6 +10,7 @@ import { EmailConfirmationPage } from "@features/auth/pages/email-confirmation";
 import { UserListPage } from "@features/user/pages/list";
 
 import { LanguageListPage } from "@features/language/pages/list";
+import { UserCreateFormPage } from "@features/user/pages/create-form";
 import { UserUpdateFormPage } from "@features/user/pages/update-form";
 
 export function RouteProvider() {
@@ -26,6 +27,7 @@ export function RouteProvider() {
 
                 <Route path="app" element={<AppLayout />}>
                     <Route path="user/list" element={<UserListPage />} />
+                    <Route path="user/form" element={<UserCreateFormPage />} />
                     <Route path="user/form/:id" element={<UserUpdateFormPage />} />
 
                     <Route path="language/list" element={<LanguageListPage />} />
