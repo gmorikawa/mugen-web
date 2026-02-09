@@ -95,6 +95,29 @@ export async function updateUser(
     return response.json();
 }
 
+export async function deleteUser(
+    session: Session,
+    id: ID
+): Promise<boolean> {
+    const response = await fetch(
+        Environment.API_URL.concat(`/users/${id}`),
+        {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${session.token}`,
+                "Accept": "application/json"
+            },
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Delete user request failed");
+    }
+
+    const { success } = await response.json();
+    return success;
+}
+
 export async function downloadUserAvatar(
     session: Session,
     id: ID,

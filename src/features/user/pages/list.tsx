@@ -8,7 +8,7 @@ import { Container } from "@components/container/container";
 
 import type { User } from "@features/user/types/user";
 import { useSession } from "@features/auth/hooks/session";
-import { getUsers } from "@features/user/utils/api";
+import { deleteUser, getUsers } from "@features/user/utils/api";
 import { UserCard } from "@features/user/components/user-card";
 
 export function UserListPage() {
@@ -31,14 +31,28 @@ export function UserListPage() {
         navigate.to(`/app/user/form/${user.id}`);
     };
 
-    useEffect(() => {
-        getUsers(session)
+    const refresh = async (): Promise<void> => {
+        return getUsers(session)
             .then((fetchedUsers: User[]) => {
                 setUsers(fetchedUsers);
             })
             .catch((error) => {
                 console.error(error);
             });
+    };
+
+    const handleDelete = (user: User) => {
+        deleteUser(session, user.id)
+            .then(() => {
+                return refresh();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    useEffect(() => {
+        refresh();
     }, []);
     return users.map((user: User) => (
         <UserCard
@@ -52,7 +66,7 @@ export function UserListPage() {
                     }}
                 >
                     <Button onClick={() => handleUpdate(user)} color="primary" variant="outlined">Edit</Button>
-                    <Button onClick={() => {}} color="danger" variant="outlined">Delete</Button>
+                    <Button onClick={() => handleDelete(user)} color="danger" variant="outlined">Delete</Button>
                 </Container>
             )}
         />
